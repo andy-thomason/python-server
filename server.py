@@ -2,6 +2,7 @@
 # code reduced from https://wiki.python.org/moin/BaseHttpServer
 
 import time
+import os
 import BaseHTTPServer
 
 # example of a python class
@@ -17,7 +18,9 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     s.wfile.write("<p>You accessed path: %s</p>" % s.path)
     s.wfile.write("</body></html>")
 
-
-httpd = BaseHTTPServer.HTTPServer(("localhost", 8000), MyHandler)
+host = os.getenv('IP', '0.0.0.0')
+port = int(os.getenv('PORT', '8080'))
+print(host, port)
+httpd = BaseHTTPServer.HTTPServer((host, port), MyHandler)
 httpd.serve_forever()
 
